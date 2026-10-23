@@ -3,6 +3,7 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Light.Components;
+using Robust.Shared.Audio;
 using Robust.Shared.Audio.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Utility;
@@ -34,6 +35,12 @@ public sealed class ParamedicSirenTest
             Assert.That(action.Comp.Icon, Is.TypeOf<SpriteSpecifier.Rsi>());
             Assert.That(((SpriteSpecifier.Rsi) action.Comp.Icon!).RsiState, Is.EqualTo("icon-siren"));
             actions.SetUseDelay(action, null);
+            Assert.That(action.Comp.Sound, Is.Null);
+            Assert.That(((SoundPathSpecifier) clothing.SoundActivate!).Path.ToString(), Is.EqualTo("/Audio/Items/flashlight_on.ogg"));
+            Assert.That(((SoundPathSpecifier) clothing.SoundDeactivate!).Path.ToString(), Is.EqualTo("/Audio/Items/flashlight_off.ogg"));
+            var toggle = entities.GetComponent<ItemToggleComponent>(suit);
+            Assert.That(toggle.SoundActivate, Is.Null, "Only the button action should play a click.");
+            Assert.That(toggle.SoundDeactivate, Is.Null, "Unequipping must stop the siren without a click.");
 
             var sound = entities.GetComponent<ItemToggleActiveSoundComponent>(suit);
             var light = entities.GetComponent<PointLightComponent>(suit);
