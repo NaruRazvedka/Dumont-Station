@@ -1,0 +1,21 @@
+# SPDX-FileCopyrightText: 2025 MarkerWicker (OmuStation)
+# SPDX-FileCopyrightText: 2026 raincally (OmuStation)
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Ported from OmuStation PRs #150 and #1613.
+
+- type: construction
+  id: ClothingCyberneticBeastSpaceMantleSecurity
+  graph: ClothingCyberneticBeastSpaceMantleSecurity
+  startNode: start
+  targetNode: helmet
+  category: construction-category-clothing
+  objectType: Item
+
+
+- type: construction
+  id: ClothingCyberneticBeastSpaceMantleCorpsman
+  graph: ClothingCyberneticBeastSpaceMantleCorpsman
+  startNode: start
+  targetNode: helmet
+  category: construction-category-clothing
+  objectType: Item
