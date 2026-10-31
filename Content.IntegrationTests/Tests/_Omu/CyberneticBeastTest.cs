@@ -1,5 +1,9 @@
 using System.Linq;
 using Content.Goobstation.Shared.Overlays;
+using System.Numerics;
+using Robust.Shared.ComponentTrees;
+using Robust.Shared.Light;
+using Robust.Shared.Map;
 using Content.Goobstation.Common.Speech;
 using Content.Server.Traits;
 using Content.Shared._Omu.Clothing.Components;
@@ -24,10 +28,71 @@ namespace Content.IntegrationTests.Tests._Omu;
 public sealed class CyberneticBeastTest
 {
     /// <summary>
-    /// Other clients receive the wearer's eye color and use it for the equipped mantle.
+    /// The glow stays in front of the wearer's face when turning in any cardinal direction.
     /// </summary>
-    [Test]
-    public async Task MantleEyeColorReplicatesToClient()
+    [TestCase("ClothingCyberneticBeastMantle")]
+    [TestCase("ClothingCyberneticBeastMantleBlueshieldOfficer")]
+    [TestCase("ClothingCyberneticBeastMantleWorkSalvage")]
+    public async Task MantleGlowFollowsTheWearersFront(string prototype)
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
+        var server = pair.Server;
+        var client = pair.Client;
+        var map = await pair.CreateTestMap();
+        EntityUid mob = default, mantle = default;
+        await server.WaitAssertion(() =>
+        {
+            mob = server.EntMan.SpawnEntity("MobVulpkanin", map.GridCoords);
+            server.EntMan.AddComponent<CyberneticBeastComponent>(mob);
+            mantle = server.EntMan.SpawnEntity(prototype, map.GridCoords);
+            Assert.That(server.System<InventorySystem>().TryEquip(mob, mantle, "head"), Is.True);
+            var mapId = server.System<SharedTransformSystem>().GetMapCoordinates(mob).MapId;
+            server.System<SharedMapSystem>().SetAmbientLight(mapId, Color.Black);
+            server.PlayerMan.SetAttachedEntity(pair.Player!, mob);
+        });
+        await pair.RunTicksSync(20);
+        var clientMob = pair.ToClientUid(mob);
+        var clientMantle = pair.ToClientUid(mantle);
+        foreach (var degrees in new[] { 0, 90, 180, 270 })
+        {
+            await server.WaitPost(() => server.System<SharedTransformSystem>().SetWorldRotation(mob, Angle.FromDegrees(degrees)));
+            await pair.RunTicksSync(10);
+            await client.WaitAssertion(() =>
+            {
+                var transform = client.System<SharedTransformSystem>();
+                var position = transform.GetWorldPosition(clientMob);
+                var rotation = transform.GetWorldRotation(clientMob);
+                Assert.That(Math.Abs(Angle.ShortestDistance(rotation, Angle.FromDegrees(degrees)).Theta), Is.LessThan(0.001), "The test must cover every cardinal direction.");
+                var forward = rotation.ToWorldVec();
+                Assert.That(client.System<Robust.Client.GameObjects.PointLightSystem>().TryGetLight(clientMantle, out var light), Is.True);
+                var lightCenter = Vector2.Transform(light!.Offset, transform.GetWorldMatrix(clientMantle));
+                Assert.That(Vector2.Dot(lightCenter - position, forward), Is.EqualTo(0.2f).Within(0.001f),
+                    $"{prototype} must emit slightly ahead of the wearer at {degrees} degrees.");
+                client.System<SharedLightTreeSystem>().FrameUpdate(0);
+                var mapId = client.EntMan.GetComponent<TransformComponent>(clientMob).MapID;
+                var levels = client.System<LightLevelSystem>();
+                Assert.That(levels.TryCalculateLightColor(new MapCoordinates(position + forward * 0.4f, mapId), out var front), Is.True);
+                Assert.That(levels.TryCalculateLightColor(new MapCoordinates(position - forward * 0.4f, mapId), out var back), Is.True);
+                Assert.That(front.R + front.G + front.B, Is.GreaterThan(back.R + back.G + back.B),
+                    "The ambient glow must be stronger in front of the face than behind the back.");
+            });
+        }
+        await server.WaitPost(() =>
+        {
+            server.PlayerMan.SetAttachedEntity(pair.Player!, null);
+            server.EntMan.DeleteEntity(map.MapUid);
+        });
+        await pair.RunTicksSync(20);
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>
+    /// Equipped mantles retain their original glow and replicate their eye and light color to clients.
+    /// </summary>
+    [TestCase("ClothingCyberneticBeastMantle", 1.45f, 0.6f)]
+    [TestCase("ClothingCyberneticBeastMantleCentralCommandNoThermal", 1.45f, 0.6f)]
+    [TestCase("ClothingCyberneticBeastMantleWorkSalvage", 5f, 0.45f)]
+    public async Task MantleColorAndGlowReplicateToClient(string prototype, float radius, float energy)
     {
         await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
         var server = pair.Server;
@@ -42,8 +107,13 @@ public sealed class CyberneticBeastTest
             appearance.EyeColor = color;
             server.EntMan.Dirty(mob, appearance);
             server.EntMan.AddComponent<CyberneticBeastComponent>(mob);
-            mantle = server.EntMan.SpawnEntity("ClothingCyberneticBeastMantle", map.GridCoords);
+            mantle = server.EntMan.SpawnEntity(prototype, map.GridCoords);
             Assert.That(server.System<InventorySystem>().TryEquip(mob, mantle, "head"), Is.True);
+            Assert.That(server.System<SharedPointLightSystem>().TryGetLight(mantle, out var light), Is.True);
+            Assert.That(light!.Enabled, Is.True);
+            Assert.That(light.ContainerOccluded, Is.False, "Equipped mantles must not suppress their light.");
+            Assert.That(light.Radius, Is.EqualTo(radius).Within(0.0001f));
+            Assert.That(light.Energy, Is.EqualTo(energy).Within(0.0001f));
             server.PlayerMan.SetAttachedEntity(pair.Player!, mob);
         });
         await pair.RunTicksSync(20);
@@ -60,6 +130,14 @@ public sealed class CyberneticBeastTest
             client.EntMan.EventBus.RaiseLocalEvent(clientMantle, visuals);
             Assert.That(visuals.Layers, Is.Not.Empty);
             Assert.That(visuals.Layers[^1].Item2.Color, Is.EqualTo(received));
+            var lights = client.System<Robust.Client.GameObjects.PointLightSystem>();
+            Assert.That(lights.TryGetLight(clientMantle, out var light), Is.True);
+            Assert.That(light!.AddToTree, Is.True, "The client must be able to render the equipped mantle's glow.");
+            Assert.That(light.Radius, Is.EqualTo(radius).Within(0.0001f));
+            Assert.That(light.Energy, Is.EqualTo(energy).Within(0.0001f));
+            Assert.That(light.Color.R, Is.EqualTo(received.R).Within(0.00001f));
+            Assert.That(light.Color.G, Is.EqualTo(received.G).Within(0.00001f));
+            Assert.That(light.Color.B, Is.EqualTo(received.B).Within(0.00001f));
         });
         await server.WaitPost(() =>
         {
@@ -199,8 +277,9 @@ public sealed class CyberneticBeastTest
     [Test]
     public async Task EveryMantleVariantCanBeEquipped()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
         var server = pair.Server;
+        var client = pair.Client;
         var map = await pair.CreateTestMap();
         EntityUid mob = default;
         string[] variants = Array.Empty<string>();
@@ -210,28 +289,66 @@ public sealed class CyberneticBeastTest
             var prototypes = server.ResolveDependency<IPrototypeManager>();
             mob = entities.SpawnEntity("MobVulpkanin", map.GridCoords);
             entities.AddComponent<CyberneticBeastComponent>(mob);
+            var mapId = server.System<SharedTransformSystem>().GetMapCoordinates(mob).MapId;
+            server.System<SharedMapSystem>().SetAmbientLight(mapId, Color.Black);
+            server.PlayerMan.SetAttachedEntity(pair.Player!, mob);
             variants = prototypes.EnumeratePrototypes<EntityPrototype>()
                 .Where(proto => !proto.Abstract && proto.Components.ContainsKey("CyberneticMantle"))
-                .Select(proto => proto.ID).ToArray();
+                .Select(proto => proto.ID).OrderBy(id => id).ToArray();
             Assert.That(variants.Length, Is.GreaterThanOrEqualTo(20));
         });
-        foreach (var variant in variants)
+
+        async Task VerifyGlow(EntityUid mantle, string label)
         {
+            await pair.RunTicksSync(20);
+            var clientMantle = pair.ToClientUid(mantle);
+            await client.WaitAssertion(() =>
+            {
+                var lights = client.System<Robust.Client.GameObjects.PointLightSystem>();
+                Assert.That(lights.TryGetLight(clientMantle, out var light), Is.True, label);
+                Assert.That(light!.AddToTree, Is.True, label);
+                client.System<SharedLightTreeSystem>().FrameUpdate(0);
+                var transform = client.System<SharedTransformSystem>();
+                var center = Vector2.Transform(light.Offset, transform.GetWorldMatrix(clientMantle));
+                var mapId = client.EntMan.GetComponent<TransformComponent>(clientMantle).MapID;
+                var samplePoint = new MapCoordinates(center + new Vector2(0.4f, 0), mapId);
+                Assert.That(client.System<LightLevelSystem>().TryCalculateLightColor(samplePoint, out var illumination), Is.True, label);
+                var brightness = Math.Max(illumination.R, Math.Max(illumination.G, illumination.B));
+                TestContext.Progress.WriteLine($"{label}: light={light.Color}, illumination={illumination}, radius={light.Radius}, energy={light.Energy}, falloff={light.Falloff}");
+                Assert.That(brightness, Is.GreaterThanOrEqualTo(0.04f), $"Ambient glow is effectively invisible: {label}");
+                Assert.That(brightness, Is.LessThanOrEqualTo(light.Energy + 0.001f), "The test map must not contribute ambient light.");
+            });
+        }
+
+        var colors = new[] { Color.Red, Color.FromHex("#6600aa"), Color.Black };
+        for (var i = 0; i < variants.Length; i++)
+        {
+            var variant = variants[i];
+            EntityUid mantle = default;
             await server.WaitAssertion(() =>
             {
                 var inventory = server.System<InventorySystem>();
                 foreach (var slot in new[] { "mask", "eyes" })
                     Assert.That(inventory.TryGetSlotEntity(mob, slot, out _), Is.False);
-                var mantle = server.EntMan.SpawnEntity(variant, map.GridCoords);
+                var humanoid = server.EntMan.GetComponent<HumanoidAppearanceComponent>(mob);
+                humanoid.EyeColor = variant.Contains("Blueshield") ? colors[1] : colors[i % colors.Length];
+                server.EntMan.Dirty(mob, humanoid);
+                mantle = server.EntMan.SpawnEntity(variant, map.GridCoords);
                 Assert.That(inventory.TryEquip(mob, mantle, "head"), Is.True, variant);
                 Assert.That(server.EntMan.HasComponent<NightVisionComponent>(mantle), Is.True, variant);
-                Assert.That(inventory.TryUnequip(mob, "head"), Is.True, variant);
-                server.EntMan.DeleteEntity(mantle);
             });
+            await VerifyGlow(mantle, $"{variant} equipped");
+            await server.WaitAssertion(() => Assert.That(server.System<InventorySystem>().TryUnequip(mob, "head"), Is.True, variant));
+            await VerifyGlow(mantle, $"{variant} on ground");
+            await server.WaitPost(() => server.EntMan.DeleteEntity(mantle));
             await pair.RunTicksSync(2);
         }
-        await server.WaitPost(() => server.EntMan.DeleteEntity(map.MapUid));
-        await pair.RunTicksSync(2);
+        await server.WaitPost(() =>
+        {
+            server.PlayerMan.SetAttachedEntity(pair.Player!, null);
+            server.EntMan.DeleteEntity(map.MapUid);
+        });
+        await pair.RunTicksSync(20);
         await pair.CleanReturnAsync();
     }
 }
