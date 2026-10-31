@@ -260,6 +260,9 @@
   name: cybernetic beast's head of security mantle
   description: A refined mantle that gives the bearer a notable air of authority. Sechud and riot grade armour plating, to help put down those unruly tiders.
   components:
+  - type: PressureProtection
+    highPressureMultiplier: 0.1
+    lowPressureMultiplier: 1000
   - type: Sprite
     sprite: _Omu/Clothing/Head/mantle.rsi
     state: icon-hos
@@ -303,6 +306,7 @@
     - type: Contraband
       allowedJobs: []
       allowedDepartments: [ Security, Command ]
+    - type: BreathMask
 
 # resprite of the standard mantle with a sechud.
 - type: entity
@@ -587,6 +591,9 @@
   name: cybernetic beast's chief medical officer mantle
   description: The best medical mantle that NT can afford. This one comes with medichem goggles and reinforced lenses to protect from bright flashes.
   components:
+  - type: PressureProtection
+    highPressureMultiplier: 0.1
+    lowPressureMultiplier: 1000
   - type: Sprite
     sprite: _Omu/Clothing/Head/mantle.rsi
     state: icon-cmo
@@ -612,6 +619,7 @@
       protectionTime: 5
     - type: FlashSoundSuppression
     - type: SolutionScanner
+    - type: BreathMask
   - type: Contraband
     allowedDepartments: [ Medical, Command ]
 
@@ -718,6 +726,9 @@
   name: cybernetic beast's command mantle
   description: A fancy gold plated mantle for command members. If found, please return to the nearest command member. Most likely the Administrative Assistant...
   components:
+  - type: PressureProtection
+    highPressureMultiplier: 0.1
+    lowPressureMultiplier: 1000
   - type: Sprite
     sprite: _Omu/Clothing/Head/mantle.rsi
     state: icon-command
@@ -740,6 +751,7 @@
       protectionTime: 5
     - type: FlashSoundSuppression
     - type: ShowJobIcons
+    - type: BreathMask
 
 #RD's mantle
 - type: entity
@@ -748,6 +760,9 @@
   name: cybernetic beast's research director mantle
   description: A state-of-the-art mantle containing all the functions of a silicon-interfacing hud
   components:
+  - type: PressureProtection
+    highPressureMultiplier: 0.1
+    lowPressureMultiplier: 1000
   - type: Sprite
     sprite: _Omu/Clothing/Head/mantle.rsi
     state: icon-rd
@@ -776,6 +791,7 @@
       - RobotTalk
       understood:
       - RobotTalk
+    - type: BreathMask
 
 
 # NTR's very cool CC mantle, no thermals
@@ -786,6 +802,9 @@
   description: A fancy gold plated mantle for the NTR. It comes equiped with central command glasses
   suffix: No thermals, DO NOT MAP
   components:
+  - type: PressureProtection
+    highPressureMultiplier: 0.1
+    lowPressureMultiplier: 1000
   - type: Sprite
     sprite: _Omu/Clothing/Head/mantle.rsi
     state: icon-centralcommand
@@ -824,6 +843,7 @@
     - type: ShowHealthIcons
       damageContainers:
       - Biological
+    - type: BreathMask
 
 
 #TRUE CC MANTLE
@@ -904,6 +924,9 @@
   name: cybernetic beast's quatermaster mantle
   description: A gaudy and expensive mantle, fit for individuals with a high net worth
   components:
+  - type: PressureProtection
+    highPressureMultiplier: 0.1
+    lowPressureMultiplier: 1000
   - type: Sprite
     sprite: _Omu/Clothing/Head/mantle.rsi
     state: icon-qm
@@ -923,6 +946,7 @@
     - type: NightVision
       isEquipment: true
       color: "#CCFFCC"
+    - type: BreathMask
 
 # Bartender mantle with integraged beer goggles.
 - type: entity

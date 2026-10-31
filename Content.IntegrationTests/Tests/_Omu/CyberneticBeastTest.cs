@@ -188,6 +188,7 @@ public sealed class CyberneticBeastTest
         {
             var prototypes = server.ResolveDependency<IPrototypeManager>();
             var trait = prototypes.Index<TraitPrototype>("CyberneticBeast");
+            Assert.That(trait.TraitGearByJob["SalvageLead"].Id, Is.EqualTo("ClothingCyberneticBeastMantleWorkSalvage"));
             var profile = HumanoidCharacterProfile.DefaultWithSpecies("Vulpkanin").WithTraitPreference("CyberneticBeast", prototypes);
             foreach (var (job, gear) in trait.TraitGearByJob)
             {
@@ -214,6 +215,14 @@ public sealed class CyberneticBeastTest
     /// </summary>
     [TestCase("ClothingCyberneticBeastMantle", false)]
     [TestCase("ClothingCyberneticBeastMantleWork", true)]
+    [TestCase("ClothingCyberneticBeastMantleHeadofSecurity", true)]
+    [TestCase("ClothingCyberneticBeastMantleMedicalCMO", true)]
+    [TestCase("ClothingCyberneticBeastMantleCommand", true)]
+    [TestCase("ClothingCyberneticBeastMantleSupply", true)]
+    [TestCase("ClothingCyberneticBeastMantleScienceCommand", true)]
+    [TestCase("ClothingCyberneticBeastMantleCentralCommandNoThermal", true)]
+    [TestCase("ClothingCyberneticBeastMantleWorkChiefEngineering", true)]
+    [TestCase("ClothingCyberneticBeastMantleBlueshieldOfficer", true)]
     [TestCase("ClothingCyberneticBeastSpaceMantleSecurity", true)]
     [TestCase("ClothingCyberneticBeastSpaceMantleCorpsman", true)]
     public async Task EquipmentPowersSlotsAndInternals(string mantlePrototype, bool supportsInternals)
@@ -249,6 +258,9 @@ public sealed class CyberneticBeastTest
             {
                 Assert.That(entities.HasComponent<BreathToolComponent>(mantle), Is.True);
                 Assert.That(entities.GetComponent<InternalsComponent>(beast).BreathTools, Does.Contain(mantle));
+                var pressure = entities.GetComponent<Content.Server.Atmos.Components.PressureProtectionComponent>(mantle);
+                Assert.That(pressure.HighPressureMultiplier, Is.LessThan(1));
+                Assert.That(pressure.LowPressureMultiplier, Is.GreaterThan(1));
             }
             Assert.That(inventory.TryUnequip(beast, "head"), Is.True);
             Assert.That(entities.HasComponent<NightVisionComponent>(mantle), Is.False);
