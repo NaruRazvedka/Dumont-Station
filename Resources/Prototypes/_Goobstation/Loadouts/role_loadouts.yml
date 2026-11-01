@@ -254,7 +254,7 @@
   groups:
   - RadioHostJumpsuit
   - RadioHostShoes
-  - CivilianBackpack
+  - CivilianBackpack # Civil loadout
   - Survival
   - Trinkets
   - Animals
