@@ -243,7 +243,7 @@
   id: ClothingCyberneticBeastMantleHeadofSecurity
   parent: [ClothingCyberneticBeastMantle, BaseSecurityCommandContraband]
   name: cybernetic beast's head of security mantle
-  description: A refined mantle that gives the bearer a notable air of authority. Sechud and riot grade armour plating, to help put down those unruly tiders.
+  description: A refined mantle that gives the bearer a notable air of authority. Riot grade armour plating helps put down unruly tiders.
   components:
   - type: PressureProtection
     highPressureMultiplier: 0.1
@@ -281,10 +281,6 @@
     - type: EyeProtection
       protectionTime: 5
     - type: FlashSoundSuppression
-    - type: ShowJobIcons
-    - type: ShowMindShieldIcons
-    - type: ShowCriminalRecordIcons
-    - type: ShowContrabandDetails
     - type: Contraband
       allowedJobs: []
       allowedDepartments: [ Security, Command ]
@@ -295,7 +291,7 @@
   id: ClothingCyberneticBeastMantleSecurity
   parent: [ClothingCyberneticBeastMantle, BaseSecurityContraband]
   name: cybernetic beast's security mantle
-  description: A modified version of a cybernetic beast's mantle. This one has riot grade armour plating and an integrated security hud to help identify criminals, jobs and mindshields all at a glace.
+  description: A modified version of a cybernetic beast's mantle with riot grade armour plating.
   components:
   - type: Sprite
     sprite: _Omu/Clothing/Head/mantle.rsi
@@ -330,10 +326,6 @@
     - type: EyeProtection
       protectionTime: 5
     - type: FlashSoundSuppression
-    - type: ShowJobIcons
-    - type: ShowMindShieldIcons
-    - type: ShowCriminalRecordIcons
-    - type: ShowContrabandDetails
 
 - type: entity
   id: ClothingCyberneticBeastSpaceMantleSecurity
@@ -375,10 +367,6 @@
     - type: EyeProtection
       protectionTime: 5
     - type: FlashSoundSuppression
-    - type: ShowJobIcons
-    - type: ShowMindShieldIcons
-    - type: ShowCriminalRecordIcons
-    - type: ShowContrabandDetails
     - type: BreathMask
   - type: IngestionBlocker # Work mantles, at least those with internals, make the cybernetic beast trait far more valuable to roles with these specialized mantles than those without. To offset this, at least a little, we'll say that the seals on the mantle make it impossible to eat while it's worn.
   - type: PressureProtection
@@ -390,7 +378,7 @@
   id: ClothingCyberneticBeastMantleCorpsman
   parent: [ClothingCyberneticBeastMantle, BaseBrigmedicContraband]
   name: cybernetic beast's corpsman mantle
-  description: A modified version of the standard security mantle that comes with a medhud to help triage injured security officers in the heat of battle.
+  description: A modified version of the standard security mantle, made for corpsmen.
   components:
   - type: Sprite
     sprite: _Omu/Clothing/Head/mantle.rsi
@@ -425,12 +413,6 @@
     - type: EyeProtection
       protectionTime: 5
     - type: FlashSoundSuppression
-    - type: ShowJobIcons
-    - type: ShowMindShieldIcons
-    - type: ShowCriminalRecordIcons
-    - type: ShowHealthBars
-    - type: ShowHealthIcons
-    - type: ShowDiseaseIcons
 
 # CORPSMAN IN SPACE
 - type: entity
@@ -473,12 +455,6 @@
     - type: EyeProtection
       protectionTime: 5
     - type: FlashSoundSuppression
-    - type: ShowJobIcons
-    - type: ShowMindShieldIcons
-    - type: ShowCriminalRecordIcons
-    - type: ShowHealthBars
-    - type: ShowHealthIcons
-    - type: ShowDiseaseIcons
     - type: BreathMask
   - type: IngestionBlocker # Work mantles, at least those with internals, make the cybernetic beast trait far more valuable to roles with these specialized mantles than those without. To offset this, at least a little, we'll say that the seals on the mantle make it impossible to eat while it's worn.
   - type: PressureProtection
@@ -488,7 +464,7 @@
 # resprite of the standard mantle with a medhud.
 - type: entity
   id: ClothingCyberneticBeastMantleMedical
-  description: A modified version of a cybernetic beast's mantle with an integrated medhud, for rapid triage of patients.
+  description: A modified version of a cybernetic beast's mantle, designed for medical staff.
   parent: [ClothingCyberneticBeastMantle, BaseMedicalContraband]
   name: cybernetic beast's medical mantle
   components:
@@ -506,9 +482,6 @@
     components:
     - type: VisionCorrection
       correctionPower: 16
-    - type: ShowHealthBars
-    - type: ShowHealthIcons
-    - type: ShowDiseaseIcons
 
 # medical mantle with internals and pressure protection for paramedics.
 - type: entity
@@ -537,9 +510,6 @@
     - type: VisionCorrection
       correctionPower: 16
     - type: BreathMask
-    - type: ShowHealthBars
-    - type: ShowHealthIcons
-    - type: ShowDiseaseIcons
 
 
 # medical mantle with medichem glasses for CMO.
@@ -547,7 +517,7 @@
   id: ClothingCyberneticBeastMantleMedicalCMO
   parent: [ClothingCyberneticBeastMantleMedical, BaseMedicalCommandContraband]
   name: cybernetic beast's chief medical officer mantle
-  description: The best medical mantle that NT can afford. This one comes with medichem goggles and reinforced lenses to protect from bright flashes.
+  description: The best medical mantle that NT can afford, with reinforced lenses to protect from bright flashes.
   components:
   - type: PressureProtection
     highPressureMultiplier: 0.1
@@ -566,14 +536,10 @@
     components:
     - type: VisionCorrection
       correctionPower: 16
-    - type: ShowHealthBars
-    - type: ShowHealthIcons
-    - type: ShowDiseaseIcons
     - type: FlashImmunity
     - type: EyeProtection
       protectionTime: 5
     - type: FlashSoundSuppression
-    - type: SolutionScanner
     - type: BreathMask
   - type: Contraband
     allowedDepartments: [ Medical, Command ]
@@ -583,7 +549,7 @@
   id: ClothingCyberneticBeastMantleMedicalChemist
   parent: [ClothingCyberneticBeastMantleMedical, BaseMedicalContraband]
   name: cybernetic beast's chemistry mantle
-  description: A modified version of a cybernetic beast's mantle. This one comes with integrated chemical analysis goggles and a medical hud
+  description: A modified version of a cybernetic beast's mantle, designed for chemists.
   components:
   - type: Sprite
     sprite: _Omu/Clothing/Head/mantle.rsi
@@ -599,11 +565,6 @@
     components:
     - type: VisionCorrection
       correctionPower: 16
-    - type: SolutionScanner
-    - type: ShowDiseaseIcons
-    - type: ShowHealthIcons
-      damageContainers:
-      - Biological
 
 
 # Mantle for the BSO
@@ -611,7 +572,7 @@
   id: ClothingCyberneticBeastMantleBlueshieldOfficer
   parent: [ClothingCyberneticBeastMantle, BaseCentcommContraband]
   name: cybernetic beast's blue shield officer mantle
-  description: The best mantle that NT can afford to their most elite Officers. This one comes with a medsec and diagnostics hud, Kevlar plating and eye protection of all types, to help patch up command IPCs in the field and stop flashbangs from blinding the wearer
+  description: The best mantle that NT can afford for their elite Officers, with Kevlar plating and eye protection to stop flashbangs from blinding the wearer.
   components:
   - type: Sprite
     sprite: _Omu/Clothing/Head/mantle.rsi
@@ -653,17 +614,6 @@
     - type: EyeProtection
       protectionTime: 5
     - type: FlashSoundSuppression
-    - type: ShowJobIcons
-    - type: ShowMindShieldIcons
-    - type: ShowHealthBars
-      damageContainers:
-      - Biological
-      - Inorganic
-      - Silicon
-      - SiliconRadiation # Goobstation - Make IPCs take radiation
-    - type: ShowHealthIcons
-      damageContainers:
-      - Biological
     - type: BreathMask
 
 
@@ -696,7 +646,6 @@
     - type: EyeProtection
       protectionTime: 5
     - type: FlashSoundSuppression
-    - type: ShowJobIcons
     - type: BreathMask
 
 #RD's mantle
@@ -704,7 +653,7 @@
   parent: [ClothingCyberneticBeastMantle, BaseScienceCommandContraband]
   id: ClothingCyberneticBeastMantleScienceCommand
   name: cybernetic beast's research director mantle
-  description: A state-of-the-art mantle containing all the functions of a silicon-interfacing hud
+  description: A state-of-the-art mantle with a robotic language translator and flash protection.
   components:
   - type: PressureProtection
     highPressureMultiplier: 0.1
@@ -742,7 +691,7 @@
   parent: [ClothingCyberneticBeastMantle, BaseCentcommContraband]
   id: ClothingCyberneticBeastMantleCentralCommandNoThermal
   name: cybernetic beast's nanotrasen representative mantle
-  description: A fancy gold plated mantle for the NTR. It comes equiped with central command glasses
+  description: A fancy gold plated mantle for the Nanotrasen Representative.
   suffix: No thermals, DO NOT MAP
   components:
   - type: PressureProtection
@@ -766,23 +715,7 @@
     - type: EyeProtection
       protectionTime: 5
     - type: FlashSoundSuppression
-    - type: ShowJobIcons
-    - type: ShowMindShieldIcons
-    - type: ShowCriminalRecordIcons
-    - type: ShowContrabandDetails
     - type: IdentityBlocker
-    - type: ShowHungerIcons
-    - type: ShowThirstIcons
-    - type: ShowDiseaseIcons
-    - type: ShowHealthBars
-      damageContainers:
-      - Biological
-      - Inorganic
-      - Silicon
-      - SiliconRadiation # Goobstation - Make IPCs take radiation
-    - type: ShowHealthIcons
-      damageContainers:
-      - Biological
     - type: BreathMask
 
 
@@ -827,28 +760,11 @@
     components:
     - type: VisionCorrection
       correctionPower: 16
-    - type: ShowSyndicateIcons
     - type: FlashImmunity
     - type: EyeProtection
       protectionTime: 5
     - type: FlashSoundSuppression
-    - type: ShowJobIcons
-    - type: ShowMindShieldIcons
-    - type: ShowCriminalRecordIcons
-    - type: ShowContrabandDetails
     - type: IdentityBlocker
-    - type: ShowHungerIcons
-    - type: ShowThirstIcons
-    - type: ShowDiseaseIcons
-    - type: ShowHealthBars
-      damageContainers:
-      - Biological
-      - Inorganic
-      - Silicon
-      - SiliconRadiation # Goobstation - Make IPCs take radiation
-    - type: ShowHealthIcons
-      damageContainers:
-      - Biological
 
 #Supply/fancy mantle for the QM and Foreman
 - type: entity
@@ -883,7 +799,7 @@
   parent: [ClothingCyberneticBeastMantle, BaseBartenderContraband]
   id: ClothingCyberneticBeastMantleBar
   name: cybernetic beast's bartender Mantle
-  description: A hand crafted mantle with integrated beer goggles, for the discerning bartender.
+  description: A hand crafted mantle for the discerning bartender.
   components:
   - type: Sprite
     sprite: _Omu/Clothing/Head/mantle.rsi
@@ -899,8 +815,6 @@
     components:
     - type: VisionCorrection
       correctionPower: 16
-    - type: SolutionScanner
-    - type: ShowThirstIcons
 
 
 # Roboticist mantle
@@ -908,7 +822,7 @@
   parent: [ClothingCyberneticBeastMantle, BaseScienceContraband]
   id: ClothingCyberneticBeastMantleRoboticist
   name: cybernetic beast's roboticist Mantle
-  description: A specially designed roboticist mantle, with Diagnostics HUD and eye protection to weld those robots back together.
+  description: A specially designed roboticist mantle with eye protection to weld those robots back together.
   components:
   - type: Sprite
     sprite: _Omu/Clothing/Head/mantle.rsi
@@ -925,11 +839,6 @@
     - type: VisionCorrection
       correctionPower: 16
     - type: EyeProtection
-    - type: ShowHealthBars
-      damageContainers:
-      - Inorganic
-      - Silicon
-      - SiliconRadiation
 
 
 
