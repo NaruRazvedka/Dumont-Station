@@ -22,7 +22,7 @@ public sealed partial class CyberneticMantleComponent : Component, IClothingSlot
     ///     The mantle will relay an event to these inventory slots when equpped.
     /// </summary>
     [DataField]
-    public SlotFlags Slots { get; set; } = SlotFlags.HEAD;
+    public SlotFlags Slots { get; set; } = SlotFlags.MASK;
 
     /// <summary>
     ///     The minimum "value" (brightness) of the eyes on the visor.

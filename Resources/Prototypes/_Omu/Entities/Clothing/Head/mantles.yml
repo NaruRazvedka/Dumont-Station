@@ -40,8 +40,9 @@
     sprite: _Omu/Clothing/Head/mantle.rsi
   - type: Clothing
     sprite: _Omu/Clothing/Head/mantle.rsi
+    slots: [mask]
     clothingVisuals:
-      head:
+      mask:
       - state: helmet-default
       - state: eyes
         shader: unshaded
@@ -68,10 +69,6 @@
     color: "#CCFFCC" # this will match the colour of the beast's eyes when worn, this is just a default.
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
-  - type: ClothingTakesUpExtraSlots
-    slots:
-    - mask
-    - eyes
   - type: StealTarget
     stealGroup: CyberneticMantles
   - type: Item
@@ -100,7 +97,7 @@
   - type: Clothing
     sprite: _Omu/Clothing/Head/mantle.rsi
     clothingVisuals:
-      head:
+      mask:
       - state: helmet-default
       - state: helmet-internals
       - state: eyes
@@ -128,7 +125,7 @@
   - type: Clothing
     sprite: _Omu/Clothing/Head/mantle.rsi
     clothingVisuals:
-      head:
+      mask:
       - state: helmet-default
       - state: helmet-internals
       - state: eyes-engineering
@@ -184,7 +181,7 @@
   - type: Clothing
     sprite: _Omu/Clothing/Head/mantle.rsi
     clothingVisuals:
-      head:
+      mask:
       - state: helmet-ce
       - state: helmet-internals
       - state: eyes-ce
@@ -228,7 +225,7 @@
   - type: Clothing
     sprite: _Omu/Clothing/Head/mantle.rsi
     clothingVisuals:
-      head:
+      mask:
       - state: helmet-salvage
       - state: helmet-internals
       - state: eyes-salvage
@@ -257,7 +254,7 @@
   - type: Clothing
     sprite: _Omu/Clothing/Head/mantle.rsi
     clothingVisuals:
-      head:
+      mask:
       - state: helmet-hos
       - state: eyes-security
         shader: unshaded
@@ -306,7 +303,7 @@
   - type: Clothing
     sprite: _Omu/Clothing/Head/mantle.rsi
     clothingVisuals:
-      head:
+      mask:
       - state: helmet-security
       - state: eyes-security
         shader: unshaded
@@ -350,7 +347,7 @@
   - type: Clothing
     sprite: _Omu/Clothing/Head/mantle.rsi
     clothingVisuals:
-      head:
+      mask:
       - state: helmet-security
       - state: helmet-internals-security
       - state: eyes-security
@@ -401,7 +398,7 @@
   - type: Clothing
     sprite: _Omu/Clothing/Head/mantle.rsi
     clothingVisuals:
-      head:
+      mask:
       - state: helmet-security
       - state: eyes-security
         shader: unshaded
@@ -448,7 +445,7 @@
   - type: Clothing
     sprite: _Omu/Clothing/Head/mantle.rsi
     clothingVisuals:
-      head:
+      mask:
       - state: helmet-security
       - state: helmet-internals-security
       - state: eyes-security
@@ -501,7 +498,7 @@
   - type: Clothing
     sprite: _Omu/Clothing/Head/mantle.rsi
     clothingVisuals:
-      head:
+      mask:
       - state: helmet-round
       - state: eyes-med
         shader: unshaded
@@ -526,7 +523,7 @@
   - type: Clothing
     sprite: _Omu/Clothing/Head/mantle.rsi
     clothingVisuals:
-      head:
+      mask:
       - state: helmet-round
       - state: helmet-internals-medical
       - state: eyes-med
@@ -561,7 +558,7 @@
   - type: Clothing
     sprite: _Omu/Clothing/Head/mantle.rsi
     clothingVisuals:
-      head:
+      mask:
       - state: helmet-cmo
       - state: eyes-med
         shader: unshaded
@@ -594,7 +591,7 @@
   - type: Clothing
     sprite: _Omu/Clothing/Head/mantle.rsi
     clothingVisuals:
-      head:
+      mask:
       - state: helmet-round
       - state: eyes-med
         shader: unshaded
@@ -622,7 +619,7 @@
   - type: Clothing
     sprite: _Omu/Clothing/Head/mantle.rsi
     clothingVisuals:
-      head:
+      mask:
       - state: helmet-bso
       - state: eyes-bso
         shader: unshaded
@@ -687,7 +684,7 @@
   - type: Clothing
     sprite: _Omu/Clothing/Head/mantle.rsi
     clothingVisuals:
-      head:
+      mask:
       - state: helmet-command
       - state: eyes-command
         shader: unshaded
@@ -718,7 +715,7 @@
   - type: Clothing
     sprite: _Omu/Clothing/Head/mantle.rsi
     clothingVisuals:
-      head:
+      mask:
       - state: helmet-rd
       - state: eyes-med
         shader: unshaded
@@ -757,7 +754,7 @@
   - type: Clothing
     sprite: _Omu/Clothing/Head/mantle.rsi
     clothingVisuals:
-      head:
+      mask:
       - state: helmet-centralcommand
       - state: eyes-centralcommand
         shader: unshaded
@@ -803,7 +800,7 @@
   - type: Clothing
     sprite: _Omu/Clothing/Head/mantle.rsi
     clothingVisuals:
-      head:
+      mask:
       - state: helmet-centralcommand
       - state: eyes-centralcommand
         shader: unshaded
@@ -869,7 +866,7 @@
   - type: Clothing
     sprite: _Omu/Clothing/Head/mantle.rsi
     clothingVisuals:
-      head:
+      mask:
       - state: helmet-qm
       - state: eyes-qm
         shader: unshaded
@@ -894,7 +891,7 @@
   - type: Clothing
     sprite: _Omu/Clothing/Head/mantle.rsi
     clothingVisuals:
-      head:
+      mask:
       - state: helmet-round
       - state: eyes-bar
         shader: unshaded
@@ -919,7 +916,7 @@
   - type: Clothing
     sprite: _Omu/Clothing/Head/mantle.rsi
     clothingVisuals:
-      head:
+      mask:
       - state: helmet-default
       - state: eyes-med
         shader: unshaded
@@ -946,7 +943,7 @@
   - type: Clothing
     sprite: _Omu/Clothing/Head/mantle.rsi
     clothingVisuals:
-      head:
+      mask:
       - state: helmet-default
       - state: helmet-internals
       - state: eyes

@@ -29,7 +29,7 @@ public sealed class CyberneticMantleVisualizerSystem : VisualizerSystem<Cybernet
 
     private void OnGetVisuals(Entity<CyberneticMantleComponent> ent, ref GetEquipmentVisualsEvent args)
     {
-        if (args.Slot == "head" && args.Layers.Count > 0 &&
+        if (args.Slot == "mask" && args.Layers.Count > 0 &&
             AppearanceSystem.TryGetData<Color>(ent, CyberneticMantleVisuals.EyeColor, out var color))
             args.Layers[^1].Item2.Color = color;
     }
