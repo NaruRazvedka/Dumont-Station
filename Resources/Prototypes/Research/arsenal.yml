@@ -222,6 +222,8 @@
   - HoloprojectorSecurity
   - WeaponDisablerSMG
   - Terminus #Goobstation
+  - ClothingCyberneticBeastSpaceMantleSecurity
+  - ClothingCyberneticBeastSpaceMantleCorpsman
   # DeltaV - Security Borg start
   - BorgModuleSecurityBastion
   - BorgModuleSecurityEscalate

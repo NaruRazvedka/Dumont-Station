@@ -3,4 +3,3 @@ trait-cybernetic-beast-desc = You are nearsighted, but your cybernetic mantle co
 species-name-cybernetic-beast = Cybernetic Beasts
 steal-target-groups-cybernetic-mantles = any cybernetic beast's mantle
 construction-graph-tag-work-mantle = work mantle
-research-technology-work-mantle = Cybernetic Work Mantles

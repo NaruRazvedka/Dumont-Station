@@ -1,5 +1,5 @@
 <Document>
-  # Cybernetic Beasts
+  # Feras Cibernéticas
 
   <Box>
 	  <GuideEntityEmbed Entity="ClothingCyberneticBeastMantle" Caption=""/>
@@ -11,26 +11,26 @@
     <GuideEntityEmbed Entity="ClothingCyberneticBeastMantleCommand" Caption=""/>
   </Box>
 
-  Cybernetic beasts are a subset of vulpkanin. They have been augmented with a removable visor, or "mantle".
-  This mantle connects to the beast's head with a set of pogo-pins. In practice, this means that beasts can
-  wear each-other's mantles, but a mantle will provide no benefit to somebody who isn't a cybernetic beast.
+  Feras Cibernéticas são Vulpkanins com implantes que permitem conectar um visor removível à cabeça.
+  A conexão usa contatos elétricos com mola, compatíveis com os visores de outras Feras Cibernéticas.
+  Quem não tem essa característica pode vestir o visor, mas não consegue usar seus recursos de visão.
 
-  Cybernetic beasts are naturally short-sighted, but this is corrected by their mantle. In turn, their mantle enhances
-  their vision; it also provides night vision.
+  Sem o visor, uma Fera Cibernética tem dificuldade para enxergar à distância. Ao equipá-lo, sua visão
+  é corrigida e ela passa a contar com visão noturna.
 
-  Cybernetic mantles are large. They cover the head and face of the wearer. Practically, this means that a beast
-  must remove their mantle in order to use a gas mask, or a set of glasses.
+  O visor é volumoso e ocupa os espaços de cabeça, máscara e óculos. Você precisa retirá-lo para usar
+  outros equipamentos nesses espaços, como uma máscara de gás, um par de óculos ou um traje espacial.
 
-  As well, due to the scarce nature of a beast's mantle, a mantle may sometimes become a target for thieves.
+  Por serem raros, esses visores podem se tornar alvos de ladrões, tome cuidado.
 
-  ## Background
+  ## História
 
-  During the early 2400s, Razzi Research and Technology, in their endless pursuit to allow colonists to live on
-  all sorts of worlds, created a set of cybernetic augments are are meant to "grow" with the user. Families
-  that had worked under them for generations were given the chance for their children to be "gifted" these augments
-  for testing.
+  No início dos anos 2400, a Razzi Research and Technology desenvolveu implantes cibernéticos que
+  deveriam "crescer" com o usuário. O projeto fazia parte de suas pesquisas para permitir que colonos
+  vivessem em diferentes mundos. Famílias que trabalhavam para a empresa havia gerações receberam
+  a oportunidade de ter seus filhos "presenteados" com os implantes para testá-los.
 
-  Due to their simliarty with drawings and photos of old Atlam predators, augmented children would often be labeled
-  as "cybernetic beasts" by the wider population.
+  A aparência das crianças com implantes lembrava os predadores de Atlam retratados em desenhos e
+  fotografias antigas. Por isso, a população passou a chamá-las de "Feras Cibernéticas".
 
 </Document>
